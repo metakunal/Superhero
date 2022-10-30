@@ -5,19 +5,19 @@ const generateToken = require("../config/generateToken");
 //@description     Get or Search all users
 //@route           GET /api/user?search=
 //@access          Public
-// const allUsers = asyncHandler(async (req, res) => {
-//     const keyword = req.query.search
-//         ? {
-//             $or: [
-//                 { name: { $regex: req.query.search, $options: "i" } },
-//                 { email: { $regex: req.query.search, $options: "i" } },
-//             ],
-//         }
-//         : {};
+const allUsers = asyncHandler(async (req, res) => {
+    const keyword = req.query.search
+        ? {
+            $or: [
+                { name: { $regex: req.query.search, $options: "i" } },
+                { email: { $regex: req.query.search, $options: "i" } },
+            ],
+        }
+        : {};
 
-//     const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
-//     res.send(users);
-// });
+    const users = await User.find(keyword).find({ _id: { $ne: req.user._id } }); //Remiving the user that is currently logged in
+    res.send(users); //Send all other users with the name or email except the currently logged one
+});
 
 //@description     Register new user
 //@route           POST /api/user/
@@ -82,5 +82,4 @@ const authUser = asyncHandler(async (req, res) => {
     }
 });
 
-// module.exports = { allUsers, registerUser, authUser };
-module.exports = { registerUser, authUser }; //temporary line just to test remove it later
+module.exports = { allUsers, registerUser, authUser };
