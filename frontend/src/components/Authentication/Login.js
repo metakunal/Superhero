@@ -15,7 +15,59 @@ const Login = () => {
     const [password, setPassword] = useState();
     const [loading, setLoading] = useState(false);
 
-    const submitHandler = () => { };
+    const history = useHistory();
+
+    const submitHandler = async () => {
+        setLoading(true);
+        if (!email || !password) {
+            toast({
+                title: "Please Fill all the Feilds",
+                status: "warning",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+            setLoading(false);
+            return;
+        }
+
+        // console.log(email, password);
+        try {
+            const config = {
+                headers: {
+                    "Content-type": "application/json",
+                },
+            };
+
+            const { data } = await axios.post(
+                "/api/user/login",
+                { email, password },
+                config
+            );
+
+            // console.log(JSON.stringify(data));
+            toast({
+                title: "Login Successful",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+            localStorage.setItem("userInfo", JSON.stringify(data));
+            setLoading(false);
+            history.push("/chats");
+        } catch (error) {
+            toast({
+                title: "Error Occured!",
+                description: error.response.data.message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
+            setLoading(false);
+        }
+    };
 
     return (
         <VStack spacing="10px">
@@ -65,7 +117,7 @@ const Login = () => {
                 Get Guest User Credentials
             </Button>
         </VStack>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;
