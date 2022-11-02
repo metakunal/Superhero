@@ -18,18 +18,39 @@ const initialState = {
 
 const Auth = () => {
     const [form, setForm] = useState(initialState);
+    const [avatarURL, setavatarURL] = useState("");
     const [isSignup, setIsSignup] = useState(true);
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
+    const [image, setImage] = useState("")
+    const submitImage = () => {
+        const data = new FormData()
+        data.append("file", image)
+        data.append("upload_preset", "Grouptron")
+        data.append("cloud_name", "dpqfstxjg")
+
+        fetch("https://api.cloudinary.com/v1_1/dpqfstxjg/image/upload", {
+            method: "post",
+            body: data
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data.url.toString());
+                setavatarURL(data.url.toString());
+                console.log("setted : " + avatarURL)
+            }).catch((err) => {
+                console.log(err)
+            })
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { username, password, phoneNumber, avatarURL, isDoctor } = form;
+        const { username, password, phoneNumber, isDoctor } = form;
 
-        if (isDoctor === "YES") {
+        if (isDoctor.toUpperCase() === "YES") {
             form.fullName = "Dr " + form.fullName;
         }
         const URL = 'http://localhost:5000/auth';
@@ -97,7 +118,7 @@ const Auth = () => {
                                 />
                             </div>
                         )}
-                        {isSignup && (
+                        {/*  {isSignup && (
                             <div className="auth__form-container_fields-content_input">
                                 <label htmlFor="avatarURL">Avatar URL</label>
                                 <input
@@ -107,6 +128,20 @@ const Auth = () => {
                                     onChange={handleChange}
                                     required
                                 />
+                            </div>
+                        )}*/}
+                        {isSignup && (
+                            <div className="auth__form-container_fields-content_input">
+                                <label htmlFor="avatarURL">Avatar URL</label>
+                                <input
+                                    name="avatarURL"
+                                    type="file"
+                                    onChange={(e) => setImage(e.target.files[0])}
+                                    required
+                                />
+                                <div className="auth__form-container_fields-content_button">
+                                    <button onClick={submitImage}>Upload</button>
+                                </div>
                             </div>
                         )}
                         <div className="auth__form-container_fields-content_input">
