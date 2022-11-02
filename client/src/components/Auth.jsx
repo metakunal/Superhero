@@ -133,12 +133,14 @@ const Auth = () => {
                         {isSignup && (
                             <div className="auth__form-container_fields-content_input">
                                 <label htmlFor="avatarURL">Avatar URL</label>
-                                <input
-                                    name="avatarURL"
-                                    type="file"
-                                    onChange={(e) => setImage(e.target.files[0])}
-                                    required
-                                />
+                                <label class="custom-file-upload"> Upload Image
+                                    <input
+                                        name="avatarURL"
+                                        type="file"
+                                        onChange={(e) => setImage(e.target.files[0])}
+                                        required
+                                    />
+                                </label>
                                 <div className="auth__form-container_fields-content_button">
                                     <button onClick={submitImage}>Upload</button>
                                 </div>
