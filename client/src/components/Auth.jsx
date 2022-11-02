@@ -13,6 +13,7 @@ const initialState = {
     confirmPassword: '',
     phoneNumber: '',
     avatarURL: '',
+    isDoctor: '',
 }
 
 const Auth = () => {
@@ -26,13 +27,15 @@ const Auth = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { username, password, phoneNumber, avatarURL } = form;
+        const { username, password, phoneNumber, avatarURL, isDoctor } = form;
 
+        if (isDoctor === "YES") {
+            form.fullName = "Dr " + form.fullName;
+        }
         const URL = 'http://localhost:5000/auth';
-        // const URL = 'https://medical-pager.herokuapp.com/auth';
 
         const { data: { token, userId, hashedPassword, fullName } } = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, {
-            username, password, fullName: form.fullName, phoneNumber, avatarURL,
+            username, password, fullName: form.fullName, phoneNumber, avatarURL, isDoctor,
         });
 
         cookies.set('token', token);
@@ -44,6 +47,7 @@ const Auth = () => {
             cookies.set('phoneNumber', phoneNumber);
             cookies.set('avatarURL', avatarURL);
             cookies.set('hashedPassword', hashedPassword);
+            cookies.set('isDoctor', isDoctor);
         }
 
         window.location.reload();
@@ -122,6 +126,18 @@ const Auth = () => {
                                     name="confirmPassword"
                                     type="password"
                                     placeholder="Confirm Password"
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
+                        )}
+                        {isSignup && (
+                            <div className="auth__form-container_fields-content_input">
+                                <label htmlFor="isDoctor">Are you a verified Pshycologist?</label>
+                                <input
+                                    name="isDoctor"
+                                    type="text"
+                                    placeholder="Type YES or NO"
                                     onChange={handleChange}
                                     required
                                 />
