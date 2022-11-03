@@ -7,6 +7,7 @@ import {
     Redirect,
 } from "react-router-dom"
 import { v4 as uuidV4 } from "uuid"
+import VidCall from "./vidCall"
 
 function App() {
     return (
@@ -20,6 +21,9 @@ function App() {
                 </Route>
                 <Route path="/documents/:id">
                     <TextEditor />
+                </Route>
+                <Route path="/vidcall" exact>
+                    <VidCall />
                 </Route>
             </Switch>
         </Router>
