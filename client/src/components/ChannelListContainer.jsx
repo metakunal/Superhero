@@ -3,8 +3,10 @@ import { ChannelList, useChatContext } from 'stream-chat-react';
 import Cookies from 'universal-cookie';
 
 import { ChannelSearch, TeamChannelList, TeamChannelPreview } from './';
-import HospitalIcon from '../assets/hospital.png'
+import GroupsIcon from '../assets/Groups.png'
 import LogoutIcon from '../assets/logout.png'
+import DocumentIcon from '../assets/document.png'
+import VideoIcon from '../assets/videocall.png'
 
 import { NavLink } from 'react-router-dom'
 
@@ -16,7 +18,7 @@ const SideBar = ({ logout }) => (
     <div className="channel-list__sidebar">
         <div className="channel-list__sidebar__icon1">
             <div className="icon1__inner">
-                <img src={HospitalIcon} alt="Hospital" width="30" />
+                <img src={GroupsIcon} alt="Groups" width="30" />
             </div>
         </div>
         <div className="channel-list__sidebar__icon2">
@@ -25,8 +27,14 @@ const SideBar = ({ logout }) => (
             </div>
         </div>
         <div className="channel-list__sidebar__icon2">
-
-            <NavLink to="/documents"> Dashboard </NavLink>
+            <div className="icon1__inner">
+                <NavLink target="_blank" to="/documents">  <img src={DocumentIcon} alt="document" width="30" /> </NavLink>
+            </div>
+        </div>
+        <div className="channel-list__sidebar__icon2">
+            <div className="icon1__inner">
+                <NavLink to="/vidcall">  <img src={VideoIcon} alt="vidcall" width="30" /> </NavLink>
+            </div>
         </div>
     </div>
 );

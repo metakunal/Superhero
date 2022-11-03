@@ -93,7 +93,7 @@ export default function TextEditor() {
             modules: { toolbar: TOOLBAR_OPTIONS },
         })
         q.disable()
-        q.setText("Loading...")
+        q.setText("Setting up the new doc for you...")
         setQuill(q)
     }, [])
     return <div className="container" ref={wrapperRef}></div>
