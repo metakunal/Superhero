@@ -33,7 +33,7 @@ const SideBar = ({ logout }) => (
         </div>
         <div className="channel-list__sidebar__icon2">
             <div className="icon1__inner">
-                <NavLink to="/vidcall">  <img src={VideoIcon} alt="vidcall" width="30" /> </NavLink>
+                <NavLink target="_blank" to="/vidcall">  <img src={VideoIcon} alt="vidcall" width="30" /> </NavLink>
             </div>
         </div>
     </div>
